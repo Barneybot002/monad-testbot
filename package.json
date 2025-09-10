@@ -1,0 +1,29 @@
+{
+  "name": "monad-testnet-trading-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot for buying and selling tokens on Monad testnet",
+  "main": "src/bot.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "monad",
+    "testnet",
+    "uniswap"
+  ],
+  "author": "Barney",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "ethers": "^5.7.2",
+    "node-telegram-bot-api": "^0.64.0",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
