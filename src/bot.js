@@ -343,7 +343,7 @@ bot.on('callback_query', asyncErrorHandler(async (query) => {
     return;
   }
   
-  if (data.startsWith('sell_token_')) { // Handle sell token button
+  if (data.startsWith('sell_token_')) {
     const tokenAddress = data.replace('sell_token_', '');
     await handleSellToken(query, tokenAddress);
     return;
@@ -387,17 +387,15 @@ bot.on('callback_query', asyncErrorHandler(async (query) => {
       { reply_markup: keyboard }
     );
     return;
-  }
+  } // Add missing closing brace here
   
-  // Handle sell token button
+  // Handle sell_token_ button
   if (data.startsWith('sell_token_')) {
-    const tokenAddress = data.replace('sell_token_', '');
-    const userId = query.from.id.toString();
-    const address = userWallets[userId].address;
+    const tokenAddress = data.split('_')[2];
+    const address = await walletUtils.getWalletAddress(userId);
     
     try {
-      // Get token info and balance
-      const tokenInfo = await uniswapUtils.getTokenInfo(tokenAddress);
+      const tokenInfo = await walletUtils.getTokenInfo(tokenAddress);
       const tokenBalance = await walletUtils.getTokenBalance(address, tokenAddress);
       
       // Check if user has any tokens
@@ -954,12 +952,9 @@ const handleSellTokenAddress = asyncErrorHandler(async (msg) => {
       
       // Check if user has any tokens
       if (parseFloat(tokenBalance.balance) <= 0) {
-        await bot.editMessageText(
-          `You don't have any ${tokenInfo.symbol} tokens to sell.`,
-          {
-            chat_id: chatId,
-            message_id: loadingMsg.message_id
-          }
+        await bot.sendMessage(
+          chatId,
+          `You don't have any ${tokenInfo.symbol} tokens to sell.`
         );
         return;
       }
