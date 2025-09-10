@@ -19,3 +19,5 @@ yarn-debug.log*
 yarn-error.log*
 .npm
 .yarn-integrity
+# Wallet data with sensitive information
+data/wallets.json
